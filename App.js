@@ -1,20 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import LottieView from 'lottie-react-native';
+import Weather from './src/Weather';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <LottieView
+        autoPlay
+        source={require('./assets/lottie/121815-calm-backdrop.json')}
+        style={styles.lottie}
+        resizeMode='cover'
+      />
+      <SafeAreaView style={{ flex: 1 }}>
+        <Weather />
+      </SafeAreaView>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  lottie: {
+    position: 'absolute',
+    zIndex: 0,
+    top: 0,
+    right: 0,
+    left: 0,
+    bottom: 0,
   },
 });
