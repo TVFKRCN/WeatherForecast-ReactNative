@@ -3,21 +3,11 @@ import React from 'react';
 import { Feather } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import dayjs from 'dayjs';
 
-const WeatherCurrentDetails = ({ data }) => {
-  let unixSunrise = data.sys.sunrise;
-  let unixSunset = data.sys.sunset;
-  let dateSunrise = new Date(unixSunrise * 1000);
-  let dateSunset = new Date(unixSunset * 1000);
-
-  let sunrisefinal = dateSunrise.toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit',
-  });
-  let sunsetfinal = dateSunset.toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit',
-  });
+const WeatherCurrentDetails = ({ dataList, data }) => {
+  let sunriseHour = dayjs(new Date(data.city.sunrise * 1000)).format('HH:MM');
+  let sunsetHour = dayjs(new Date(data.city.sunset * 1000)).format('HH:MM');
 
   return (
     <View style={styles.container}>
@@ -25,27 +15,28 @@ const WeatherCurrentDetails = ({ data }) => {
         <View>
           <MaterialCommunityIcons
             name='water-percent'
-            size={24}
+            size={32}
             color='black'
           />
-          <Text>{data.main.humidity}%</Text>
+          <Text>{dataList.main.humidity}%</Text>
         </View>
         <View>
-          <Feather name='wind' size={24} color='black' />
-          <Text>{Math.round(data.wind.speed)}m/s</Text>
+          <Feather name='wind' size={32} color='black' />
+          <Text>{Math.round(dataList.wind.speed)}m/s</Text>
         </View>
         <View>
           <View style={styles.sunIcons}>
-            <AntDesign name='arrowup' size={12} color='black' />
+            <AntDesign name='arrowup' size={16} color='black' />
             <MaterialCommunityIcons
               name='weather-sunset'
-              size={24}
+              size={32}
               color='black'
             />
-            <AntDesign name='arrowdown' size={12} color='black' />
+            <AntDesign name='arrowdown' size={16} color='black' />
           </View>
-          <Text>{sunrisefinal}</Text>
-          <Text>{sunsetfinal}</Text>
+          <Text>
+            {sunriseHour} - {sunsetHour}
+          </Text>
         </View>
       </View>
     </View>
@@ -63,9 +54,12 @@ const styles = StyleSheet.create({
   innerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginHorizontal: 16,
   },
   sunIcons: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginHorizontal: 2,
+    justifyContent: 'space-between',
   },
 });

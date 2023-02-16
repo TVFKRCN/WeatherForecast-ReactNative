@@ -2,37 +2,37 @@ import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import LottieView from 'lottie-react-native';
 
-const WeatherCurrent = ({ data }) => {
+const WeatherCurrent = ({ dataList, data }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.cityName}>{data.name}</Text>
+      <Text style={styles.cityName}>{data.city.name}</Text>
       <View style={styles.containerInside}>
         <View style={styles.currentAnimation}>
           <LottieView
             autoPlay
-            source={require('../assets/lottie/50649-sunny.json')}
+            source={require('../../assets/lottie/50649-sunny.json')}
             style={styles.lottie}
           />
         </View>
         <View style={styles.currentInfo}>
           <View style={styles.currentTempContainer}>
             <Text style={styles.currentWeather}>
-              {Math.round(data.main.temp)}°C
+              {Math.round(dataList.main.temp)}°C
             </Text>
 
             <View style={styles.currentWeatherMinMaxContainer}>
               <Text style={styles.currentWeatherMinMax}>
-                {Math.round(data.main.temp_max)}°C
+                {Math.round(dataList.main.temp_max)}°C
               </Text>
               <Text style={styles.currentWeatherMinMax}>
-                {Math.round(data.main.temp_min)}°C
+                {Math.round(dataList.main.temp_min)}°C
               </Text>
             </View>
           </View>
 
           <View style={styles.currentDesc}>
-            <Text>{data.weather[0].description}</Text>
-            <Text>Feels Like {Math.round(data.main.feels_like)}°C</Text>
+            <Text>{dataList.weather[0].description}</Text>
+            <Text>Feels Like {Math.round(dataList.main.feels_like)}°C</Text>
           </View>
         </View>
       </View>

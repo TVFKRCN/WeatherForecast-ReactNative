@@ -13,47 +13,78 @@ import {
 } from 'react-native';
 import { useEffect, useState } from 'react';
 import * as Location from 'expo-location';
-import WeatherCurrent from './WeatherCurrent';
-import WeatherCurrentDetails from './WeatherCurrentDetails';
-import WeatherDays from './WeatherDays';
+import WeatherCurrent from './components/WeatherCurrent';
+import WeatherCurrentDetails from './components/WeatherCurrentDetails';
+import WeatherDays from './components/WeatherDays';
 
 const API_KEY = '0a376894bdbeb8189cc3404d0bcdf255';
 
 const Weather = () => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const getData = async () => {
+    setRefreshing(true);
+
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    // if permission is denied, show an alert
+    if (status !== 'granted') {
+      Alert.alert('Permission to access location was denied');
+    }
+
+    // get the current location
+    let location = await Location.getCurrentPositionAsync({
+      enableHighAccuracy: true,
+    });
+
+    // fetches the weather data from the openweather api
+    const response = await fetch(
+      `https://api.openweathermap.org/data/2.5/forecast?&lat=${location.coords.latitude}&lon=${location.coords.longitude}&units=metric&appid=${API_KEY}`
+    );
+    const data = await response.json(); // convert the response to json
+
+    // console.log(data);
+    if (!response.ok) {
+      Alert.alert('Error', 'Something went wrong'); // if the response is not ok, show an alert
+    } else {
+      setData(data); //set the data to the state
+    }
+    setRefreshing(false);
+  };
 
   useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        Alert.alert('Permission to access location was denied');
-      }
-
-      let location = await Location.getCurrentPositionAsync({
-        enableHighAccuracy: true,
-      });
-      fetchDataFromApi(location.coords.latitude, location.coords.longitude);
-    })();
+    getData();
   }, []);
 
-  const fetchDataFromApi = (latitude, longitude) => {
-    if (latitude && longitude) {
-      fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          // console.log(data);
-          setData(data);
-        });
-    }
-  };
+  if (!data) {
+    // if the forecast is not loaded, show a loading indicator
+    return (
+      <SafeAreaView>
+        <ActivityIndicator size='large' />
+      </SafeAreaView>
+    );
+  }
+
+  const dataList = data.list[0];
+  const dataListOne = data.list[1];
+  const dataListTwo = data.list[2];
+  const dataListThree = data.list[3];
 
   return (
     <SafeAreaView style={styles.container}>
-      <WeatherCurrent data={data} />
-      <WeatherCurrentDetails data={data} />
-      <WeatherDays data={data} />
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={() => getData()} />
+        }
+      >
+        <WeatherCurrent dataList={dataList} data={data} />
+        <WeatherCurrentDetails dataList={dataList} data={data} />
+        <WeatherDays
+          dataListOne={dataListOne}
+          dataListTwo={dataListTwo}
+          dataListThree={dataListThree}
+        />
+      </ScrollView>
     </SafeAreaView>
   );
 };
