@@ -1,40 +1,26 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
-import dayjs from 'dayjs';
 
 const WeatherCurrentDetails = ({ dataList, data }) => {
-  // let sunriseHour = dayjs(new Date(data.city.sunrise * 1000)).format('HH:MM');
-  // let sunsetHour = dayjs(new Date(data.city.sunset * 1000)).format('HH:MM');
-  // let sunsetHour = dayjs(dataList.astro.sunset).format('HH:MM');
-
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
-        <View>
-          <Ionicons name='umbrella' size={32} color='black' />
+        <View style={styles.parts}>
+          <Ionicons name='md-umbrella' size={32} color='black' />
           <Text>{dataList.day.daily_chance_of_rain}%</Text>
         </View>
-        <View>
+        <View style={styles.parts}>
           <Feather name='wind' size={32} color='black' />
           <Text>{Math.round(data.current.wind_kph)}km/h</Text>
         </View>
-        <View>
-          <View style={styles.sunIcons}>
-            <AntDesign name='arrowup' size={16} color='black' />
-            <MaterialCommunityIcons
-              name='weather-sunset'
-              size={32}
-              color='black'
-            />
-            <AntDesign name='arrowdown' size={16} color='black' />
-          </View>
-          <Text>
-            {dataList.astro.sunrise} - {dataList.astro.sunrise}
-          </Text>
+        <View style={styles.parts}>
+          <Feather name='sunrise' size={32} color='black' />
+          <Text>{dataList.astro.sunrise}</Text>
+        </View>
+        <View style={styles.parts}>
+          <Feather name='sunset' size={32} color='black' />
+          <Text>{dataList.astro.sunset}</Text>
         </View>
       </View>
     </View>
@@ -52,12 +38,9 @@ const styles = StyleSheet.create({
   innerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginHorizontal: 16,
+    margin: '3%',
   },
-  sunIcons: {
-    flexDirection: 'row',
+  parts: {
     alignItems: 'center',
-    marginHorizontal: 2,
-    justifyContent: 'space-between',
   },
 });

@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
-import LottieView from 'lottie-react-native';
+import WeatherAnimations from './WeatherAnimations';
 
 const WeatherCurrent = ({ dataList, data }) => {
   return (
@@ -8,11 +7,7 @@ const WeatherCurrent = ({ dataList, data }) => {
       <Text style={styles.cityName}>{data.location.name}</Text>
       <View style={styles.containerInside}>
         <View style={styles.currentAnimation}>
-          <LottieView
-            autoPlay
-            source={require('../../assets/lottie/50649-sunny.json')}
-            style={styles.lottie}
-          />
+          <WeatherAnimations data={data} />
         </View>
         <View style={styles.currentInfo}>
           <View style={styles.currentTempContainer}>
@@ -77,8 +72,8 @@ const styles = StyleSheet.create({
   },
   cityName: {
     color: '#C84B31',
-    marginTop: 28,
-    fontSize: 32,
+    marginTop: 30,
+    fontSize: 36,
     textAlign: 'center',
   },
   lottie: {

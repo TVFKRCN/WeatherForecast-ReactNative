@@ -12,6 +12,7 @@ import {
   FlatList,
 } from 'react-native';
 import { useEffect, useState } from 'react';
+import LottieView from 'lottie-react-native';
 import * as Location from 'expo-location';
 import WeatherCurrent from './components/WeatherCurrent';
 import WeatherCurrentDetails from './components/WeatherCurrentDetails';
@@ -70,17 +71,28 @@ const Weather = () => {
   const dataListTwo = data.forecast.forecastday[2];
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={() => getData()} />
-        }
-      >
-        <WeatherCurrent dataList={dataList} data={data} />
-        <WeatherCurrentDetails dataList={dataList} data={data} />
-        <WeatherDays dataListOne={dataListOne} dataListTwo={dataListTwo} />
-      </ScrollView>
-    </SafeAreaView>
+    <>
+      <LottieView
+        autoPlay
+        source={require('../assets/lottie/121815-calm-backdrop.json')}
+        style={styles.lottieBg}
+        resizeMode='cover'
+      />
+      <SafeAreaView style={styles.container}>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={() => getData()}
+            />
+          }
+        >
+          <WeatherCurrent dataList={dataList} data={data} />
+          <WeatherCurrentDetails dataList={dataList} data={data} />
+          <WeatherDays dataListOne={dataListOne} dataListTwo={dataListTwo} />
+        </ScrollView>
+      </SafeAreaView>
+    </>
   );
 };
 
@@ -89,5 +101,13 @@ export default Weather;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  lottieBg: {
+    position: 'absolute',
+    zIndex: 0,
+    top: 0,
+    right: 0,
+    left: 0,
+    bottom: 0,
   },
 });
