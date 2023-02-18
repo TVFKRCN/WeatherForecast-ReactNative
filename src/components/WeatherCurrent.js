@@ -5,7 +5,7 @@ import LottieView from 'lottie-react-native';
 const WeatherCurrent = ({ dataList, data }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.cityName}>{data.city.name}</Text>
+      <Text style={styles.cityName}>{data.location.name}</Text>
       <View style={styles.containerInside}>
         <View style={styles.currentAnimation}>
           <LottieView
@@ -17,22 +17,22 @@ const WeatherCurrent = ({ dataList, data }) => {
         <View style={styles.currentInfo}>
           <View style={styles.currentTempContainer}>
             <Text style={styles.currentWeather}>
-              {Math.round(dataList.main.temp)}°C
+              {Math.round(data.current.temp_c)}°C
             </Text>
 
             <View style={styles.currentWeatherMinMaxContainer}>
               <Text style={styles.currentWeatherMinMax}>
-                {Math.round(dataList.main.temp_max)}°C
+                {Math.round(dataList.day.maxtemp_c)}°C
               </Text>
               <Text style={styles.currentWeatherMinMax}>
-                {Math.round(dataList.main.temp_min)}°C
+                {Math.round(dataList.day.mintemp_c)}°C
               </Text>
             </View>
           </View>
 
           <View style={styles.currentDesc}>
-            <Text>{dataList.weather[0].description}</Text>
-            <Text>Feels Like {Math.round(dataList.main.feels_like)}°C</Text>
+            <Text>{data.current.condition.text}</Text>
+            <Text>Feels Like {Math.round(data.current.feelslike_c)}°C</Text>
           </View>
         </View>
       </View>

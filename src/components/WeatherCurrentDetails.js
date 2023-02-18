@@ -1,28 +1,26 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
+import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import dayjs from 'dayjs';
 
 const WeatherCurrentDetails = ({ dataList, data }) => {
-  let sunriseHour = dayjs(new Date(data.city.sunrise * 1000)).format('HH:MM');
-  let sunsetHour = dayjs(new Date(data.city.sunset * 1000)).format('HH:MM');
+  // let sunriseHour = dayjs(new Date(data.city.sunrise * 1000)).format('HH:MM');
+  // let sunsetHour = dayjs(new Date(data.city.sunset * 1000)).format('HH:MM');
+  // let sunsetHour = dayjs(dataList.astro.sunset).format('HH:MM');
 
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
         <View>
-          <MaterialCommunityIcons
-            name='water-percent'
-            size={32}
-            color='black'
-          />
-          <Text>{dataList.main.humidity}%</Text>
+          <Ionicons name='umbrella' size={32} color='black' />
+          <Text>{dataList.day.daily_chance_of_rain}%</Text>
         </View>
         <View>
           <Feather name='wind' size={32} color='black' />
-          <Text>{Math.round(dataList.wind.speed)}m/s</Text>
+          <Text>{Math.round(data.current.wind_kph)}km/h</Text>
         </View>
         <View>
           <View style={styles.sunIcons}>
@@ -35,7 +33,7 @@ const WeatherCurrentDetails = ({ dataList, data }) => {
             <AntDesign name='arrowdown' size={16} color='black' />
           </View>
           <Text>
-            {sunriseHour} - {sunsetHour}
+            {dataList.astro.sunrise} - {dataList.astro.sunrise}
           </Text>
         </View>
       </View>

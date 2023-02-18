@@ -17,7 +17,7 @@ import WeatherCurrent from './components/WeatherCurrent';
 import WeatherCurrentDetails from './components/WeatherCurrentDetails';
 import WeatherDays from './components/WeatherDays';
 
-const API_KEY = '0a376894bdbeb8189cc3404d0bcdf255';
+const API_KEY = '6a03dc197c974bac939112527221204';
 
 const Weather = () => {
   const [data, setData] = useState(null);
@@ -39,7 +39,7 @@ const Weather = () => {
 
     // fetches the weather data from the openweather api
     const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?&lat=${location.coords.latitude}&lon=${location.coords.longitude}&units=metric&appid=${API_KEY}`
+      `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${location.coords.latitude},${location.coords.longitude}&days=3&aqi=no&alerts=no`
     );
     const data = await response.json(); // convert the response to json
 
@@ -65,10 +65,9 @@ const Weather = () => {
     );
   }
 
-  const dataList = data.list[0];
-  const dataListOne = data.list[1];
-  const dataListTwo = data.list[2];
-  const dataListThree = data.list[3];
+  const dataList = data.forecast.forecastday[0];
+  const dataListOne = data.forecast.forecastday[1];
+  const dataListTwo = data.forecast.forecastday[2];
 
   return (
     <SafeAreaView style={styles.container}>
@@ -79,11 +78,7 @@ const Weather = () => {
       >
         <WeatherCurrent dataList={dataList} data={data} />
         <WeatherCurrentDetails dataList={dataList} data={data} />
-        <WeatherDays
-          dataListOne={dataListOne}
-          dataListTwo={dataListTwo}
-          dataListThree={dataListThree}
-        />
+        <WeatherDays dataListOne={dataListOne} dataListTwo={dataListTwo} />
       </ScrollView>
     </SafeAreaView>
   );
