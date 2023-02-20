@@ -7,7 +7,7 @@ const WeatherCurrent = ({ data }) => {
       <Text style={styles.cityName}>{data.location.name}</Text>
       <View style={styles.containerInside}>
         <View style={styles.currentAnimation}>
-          <WeatherAnimations data={data} />
+          <WeatherAnimations data={data.current} />
         </View>
         <View style={styles.currentInfo}>
           <View style={styles.currentTempContainer}>

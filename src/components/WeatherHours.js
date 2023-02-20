@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, FlatList } from 'react-native';
 import React from 'react';
 import dayjs from 'dayjs';
 import LottieView from 'lottie-react-native';
+import WeatherAnimations from './WeatherAnimations';
 
 const WeatherHours = ({ data }) => {
   const hourlyData = data.forecast.forecastday[0].hour;
@@ -11,11 +12,7 @@ const WeatherHours = ({ data }) => {
       <View style={styles.hourly}>
         <Text>{dayjs.unix(hourlyData.time_epoch).format('HH:mm')}</Text>
         <Text>{Math.round(hourlyData.temp_c)}°C</Text>
-        <LottieView
-          autoPlay
-          source={require('../../assets/lottie/50649-sunny.json')}
-          style={styles.lottie}
-        />
+        <WeatherAnimations data={hourlyData} styleIndex={0} />
         <Text>{hourlyData.condition.text}</Text>
       </View>
     </View>
@@ -46,9 +43,8 @@ const styles = StyleSheet.create({
   },
   hourly: {
     alignItems: 'center',
-  },
-  lottie: {
-    height: 50,
-    width: 50,
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    borderRadius: 10,
+    margin: 0.5,
   },
 });

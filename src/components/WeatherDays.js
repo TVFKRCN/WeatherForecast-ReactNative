@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import dayjs from 'dayjs';
 import LottieView from 'lottie-react-native';
+import WeatherAnimations from './WeatherAnimations';
 
 const WeatherDays = ({ data }) => {
   let firstDay = dayjs
@@ -15,10 +16,9 @@ const WeatherDays = ({ data }) => {
       <View style={styles.innerContainer}>
         <Text>{firstDay}</Text>
         <View style={styles.daysAnimation}>
-          <LottieView
-            autoPlay
-            source={require('../../assets/lottie/50649-sunny.json')}
-            style={styles.lottie}
+          <WeatherAnimations
+            data={data.forecast.forecastday[1].day}
+            styleIndex={1}
           />
         </View>
         <Text>
@@ -29,10 +29,9 @@ const WeatherDays = ({ data }) => {
       <View style={styles.innerContainer}>
         <Text>{secondDay}</Text>
         <View style={styles.daysAnimation}>
-          <LottieView
-            autoPlay
-            source={require('../../assets/lottie/50649-sunny.json')}
-            style={styles.lottie}
+          <WeatherAnimations
+            data={data.forecast.forecastday[2].day}
+            styleIndex={1}
           />
         </View>
         <Text>
@@ -64,9 +63,5 @@ const styles = StyleSheet.create({
   daysAnimation: {
     alignItems: 'center',
     alignContent: 'center',
-  },
-  lottie: {
-    height: 100,
-    width: 100,
   },
 });
