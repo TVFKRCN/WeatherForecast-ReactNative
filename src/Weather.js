@@ -17,6 +17,7 @@ import * as Location from 'expo-location';
 import WeatherCurrent from './components/WeatherCurrent';
 import WeatherCurrentDetails from './components/WeatherCurrentDetails';
 import WeatherDays from './components/WeatherDays';
+import WeatherHours from './components/WeatherHours';
 
 const API_KEY = '6a03dc197c974bac939112527221204';
 
@@ -85,6 +86,7 @@ const Weather = () => {
         >
           <WeatherCurrent data={data} />
           <WeatherCurrentDetails data={data} />
+          <WeatherHours data={data} />
           <WeatherDays data={data} />
         </ScrollView>
       </SafeAreaView>
