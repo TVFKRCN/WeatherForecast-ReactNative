@@ -66,10 +66,6 @@ const Weather = () => {
     );
   }
 
-  const dataList = data.forecast.forecastday[0];
-  const dataListOne = data.forecast.forecastday[1];
-  const dataListTwo = data.forecast.forecastday[2];
-
   return (
     <>
       <LottieView
@@ -87,9 +83,9 @@ const Weather = () => {
             />
           }
         >
-          <WeatherCurrent dataList={dataList} data={data} />
-          <WeatherCurrentDetails dataList={dataList} data={data} />
-          <WeatherDays dataListOne={dataListOne} dataListTwo={dataListTwo} />
+          <WeatherCurrent data={data} />
+          <WeatherCurrentDetails data={data} />
+          <WeatherDays data={data} />
         </ScrollView>
       </SafeAreaView>
     </>

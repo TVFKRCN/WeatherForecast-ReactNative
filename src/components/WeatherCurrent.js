@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import WeatherAnimations from './WeatherAnimations';
 
-const WeatherCurrent = ({ dataList, data }) => {
+const WeatherCurrent = ({ data }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.cityName}>{data.location.name}</Text>
@@ -17,10 +17,10 @@ const WeatherCurrent = ({ dataList, data }) => {
 
             <View style={styles.currentWeatherMinMaxContainer}>
               <Text style={styles.currentWeatherMinMax}>
-                {Math.round(dataList.day.maxtemp_c)}°C
+                {Math.round(data.forecast.forecastday[0].day.maxtemp_c)}°C
               </Text>
               <Text style={styles.currentWeatherMinMax}>
-                {Math.round(dataList.day.mintemp_c)}°C
+                {Math.round(data.forecast.forecastday[0].day.mintemp_c)}°C
               </Text>
             </View>
           </View>

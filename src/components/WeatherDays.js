@@ -2,9 +2,13 @@ import { StyleSheet, Text, View } from 'react-native';
 import dayjs from 'dayjs';
 import LottieView from 'lottie-react-native';
 
-const WeatherCurrentDetails = ({ dataListOne, dataListTwo }) => {
-  let firstDay = dayjs.unix(dataListOne.date_epoch).format('dddd');
-  let secondDay = dayjs.unix(dataListTwo.date_epoch).format('dddd');
+const WeatherDays = ({ data }) => {
+  let firstDay = dayjs
+    .unix(data.forecast.forecastday[1].date_epoch)
+    .format('dddd');
+  let secondDay = dayjs
+    .unix(data.forecast.forecastday[2].date_epoch)
+    .format('dddd');
 
   return (
     <View style={styles.container}>
@@ -18,8 +22,8 @@ const WeatherCurrentDetails = ({ dataListOne, dataListTwo }) => {
           />
         </View>
         <Text>
-          {Math.round(dataListOne.day.maxtemp_c)}°C /{' '}
-          {Math.round(dataListOne.day.mintemp_c)}°C
+          {Math.round(data.forecast.forecastday[1].day.maxtemp_c)}°C /{' '}
+          {Math.round(data.forecast.forecastday[1].day.mintemp_c)}°C
         </Text>
       </View>
       <View style={styles.innerContainer}>
@@ -32,15 +36,15 @@ const WeatherCurrentDetails = ({ dataListOne, dataListTwo }) => {
           />
         </View>
         <Text>
-          {Math.round(dataListTwo.day.maxtemp_c)}°C /{' '}
-          {Math.round(dataListTwo.day.mintemp_c)}°C
+          {Math.round(data.forecast.forecastday[2].day.maxtemp_c)}°C /{' '}
+          {Math.round(data.forecast.forecastday[2].day.mintemp_c)}°C
         </Text>
       </View>
     </View>
   );
 };
 
-export default WeatherCurrentDetails;
+export default WeatherDays;
 
 const styles = StyleSheet.create({
   container: {

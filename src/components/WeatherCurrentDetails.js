@@ -2,13 +2,13 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 
-const WeatherCurrentDetails = ({ dataList, data }) => {
+const WeatherCurrentDetails = ({ data }) => {
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
         <View style={styles.parts}>
           <Ionicons name='md-umbrella' size={32} color='black' />
-          <Text>{dataList.day.daily_chance_of_rain}%</Text>
+          <Text>{data.forecast.forecastday[0].day.daily_chance_of_rain}%</Text>
         </View>
         <View style={styles.parts}>
           <Feather name='wind' size={32} color='black' />
@@ -16,11 +16,11 @@ const WeatherCurrentDetails = ({ dataList, data }) => {
         </View>
         <View style={styles.parts}>
           <Feather name='sunrise' size={32} color='black' />
-          <Text>{dataList.astro.sunrise}</Text>
+          <Text>{data.forecast.forecastday[0].astro.sunrise}</Text>
         </View>
         <View style={styles.parts}>
           <Feather name='sunset' size={32} color='black' />
-          <Text>{dataList.astro.sunset}</Text>
+          <Text>{data.forecast.forecastday[0].astro.sunset}</Text>
         </View>
       </View>
     </View>
