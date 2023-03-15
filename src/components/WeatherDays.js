@@ -25,6 +25,7 @@ const WeatherDays = ({ data }) => {
           {Math.round(data.forecast.forecastday[1].day.maxtemp_c)}°C /{' '}
           {Math.round(data.forecast.forecastday[1].day.mintemp_c)}°C
         </Text>
+        <Text>{data.forecast.forecastday[1].day.condition.text}</Text>
       </View>
       <View style={styles.innerContainer}>
         <Text>{secondDay}</Text>
@@ -38,6 +39,7 @@ const WeatherDays = ({ data }) => {
           {Math.round(data.forecast.forecastday[2].day.maxtemp_c)}°C /{' '}
           {Math.round(data.forecast.forecastday[2].day.mintemp_c)}°C
         </Text>
+        <Text>{data.forecast.forecastday[2].day.condition.text}</Text>
       </View>
     </View>
   );

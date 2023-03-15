@@ -1,31 +1,11 @@
-import { StyleSheet, View, SafeAreaView, TextInput } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import { EvilIcons } from '@expo/vector-icons';
+import CitySearch from '../components/CitySearch';
 
 const SearchScreen = () => {
-  return (
-    <SafeAreaView>
-      <View style={styles.searchBar}>
-        <TextInput placeholder='Search City' />
-        <EvilIcons name='search' size={28} color='black' />
-      </View>
-    </SafeAreaView>
-  );
+  return <CitySearch />;
 };
 
 export default SearchScreen;
 
-const styles = StyleSheet.create({
-  searchBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginTop: 50,
-    borderWidth: 1.5,
-    paddingVertical: 10,
-    borderRadius: 25,
-    marginHorizontal: 10,
-    paddingHorizontal: 10,
-    backgroundColor: 'lightgray',
-  },
-});
+const styles = StyleSheet.create({});

@@ -9,10 +9,10 @@ export default function App() {
   return (
     <NavigationContainer>
       <Drawer.Navigator
-        initialRouteName='Home'
+        initialRouteName='My Location'
         screenOptions={{ headerShown: false }}
       >
-        <Drawer.Screen name='Home' component={HomeScreen} />
+        <Drawer.Screen name='My Location' component={HomeScreen} />
         <Drawer.Screen name='Search' component={SearchScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
