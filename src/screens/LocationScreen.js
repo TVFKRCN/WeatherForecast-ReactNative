@@ -46,8 +46,16 @@ const LocationScreen = ({ route }) => {
   if (!data) {
     // if the forecast is not loaded, show a loading indicator
     return (
-      <SafeAreaView>
+      <SafeAreaView style={styles.container}>
         <ActivityIndicator size='large' />
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={() => getData()}
+            />
+          }
+        />
       </SafeAreaView>
     );
   }
