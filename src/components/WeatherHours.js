@@ -39,12 +39,13 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   innerContainer: {
-    margin: 10,
+    margin: 8,
   },
   hourly: {
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.1)',
     borderRadius: 10,
     margin: 0.5,
+    padding: 4,
   },
 });

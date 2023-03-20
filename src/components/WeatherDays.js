@@ -59,8 +59,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.1)',
     borderRadius: 15,
-    height: 180,
+    height: 190,
     width: 140,
+    paddingVertical: 4,
   },
   daysAnimation: {
     alignItems: 'center',
