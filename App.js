@@ -15,7 +15,15 @@ export default function App() {
       >
         <Drawer.Screen name='My Location' component={HomeScreen} />
         <Drawer.Screen name='Search' component={SearchScreen} />
-        <Drawer.Screen name='Location' component={LocationScreen} />
+        <Drawer.Screen
+          name='Location'
+          component={LocationScreen}
+          options={{
+            drawerItemStyle: {
+              display: 'none',
+            },
+          }}
+        />
       </Drawer.Navigator>
     </NavigationContainer>
   );
