@@ -1,10 +1,20 @@
-import { StyleSheet, View, SafeAreaView, TextInput, Text } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  SafeAreaView,
+  TextInput,
+  Text,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
 import { useEffect, useState } from 'react';
 import { EvilIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 const API_KEY = '6a03dc197c974bac939112527221204';
 
 const CitySearch = () => {
+  const navigation = useNavigation();
   const [cityName, setCityName] = useState('');
   const [cityData, setCityData] = useState('');
 
@@ -13,7 +23,7 @@ const CitySearch = () => {
       `http://api.weatherapi.com/v1/search.json?key=${API_KEY}&q=${cityName}`
     );
     const data = await response.json();
-    console.log(cityData);
+    // console.log(cityData);
     if (!response.ok) {
       setCityData([]);
     } else {
@@ -25,6 +35,25 @@ const CitySearch = () => {
     fetchCityData();
   }, []);
 
+  const [selectedCity, setSelectedCity] = useState('');
+
+  useEffect(() => {
+    console.log(selectedCity);
+  }, [selectedCity]);
+
+  const SearchedCity = ({ data }) => (
+    <TouchableOpacity
+      style={styles.list}
+      onPress={() => {
+        setSelectedCity(data.name);
+        navigation.navigate('Location', { selectedCity });
+      }}
+    >
+      <Text style={styles.listText}>{data.name}</Text>
+      <View style={styles.listSeparator}></View>
+    </TouchableOpacity>
+  );
+
   return (
     <SafeAreaView>
       <View style={styles.searchBar}>
@@ -33,19 +62,17 @@ const CitySearch = () => {
           value={cityName}
           onChangeText={(text) => {
             setCityName(text);
-            fetchCityData(cityName);
+            fetchCityData(text);
           }}
         />
         <EvilIcons name='search' size={28} color='black' />
       </View>
-      <View>
-        <Text>
-          {!cityData[0] ? (
-            <Text>nothing</Text>
-          ) : (
-            <Text>{cityData[0].name}</Text>
-          )}
-        </Text>
+      <View style={styles.listContainer}>
+        <FlatList
+          data={cityData}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <SearchedCity data={item} />}
+        />
       </View>
     </SafeAreaView>
   );
@@ -62,8 +89,23 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     paddingVertical: 10,
     borderRadius: 25,
-    marginHorizontal: 10,
+    marginHorizontal: 20,
     paddingHorizontal: 10,
     backgroundColor: 'lightgray',
+  },
+  listContainer: {
+    margin: 20,
+  },
+  list: {
+    paddingBottom: 10,
+  },
+  listText: {
+    fontSize: 18,
+    paddingLeft: 10,
+  },
+  listSeparator: {
+    backgroundColor: 'gray',
+    height: 0.5,
+    margin: 2,
   },
 });

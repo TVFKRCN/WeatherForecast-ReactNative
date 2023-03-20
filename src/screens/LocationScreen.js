@@ -1,55 +1,32 @@
 import {
+  View,
   Alert,
   StyleSheet,
-  Text,
-  View,
   SafeAreaView,
   ActivityIndicator,
   ScrollView,
   RefreshControl,
-  Image,
-  Dimensions,
-  FlatList,
 } from 'react-native';
 import { useEffect, useState } from 'react';
 import LottieView from 'lottie-react-native';
-import * as Location from 'expo-location';
-import WeatherCurrent from './components/WeatherCurrent';
-import WeatherCurrentDetails from './components/WeatherCurrentDetails';
-import WeatherDays from './components/WeatherDays';
-import WeatherHours from './components/WeatherHours';
-import ApiService from './utils/ApiService';
+import WeatherCurrent from '../components/WeatherCurrent';
+import WeatherCurrentDetails from '../components/WeatherCurrentDetails';
+import WeatherDays from '../components/WeatherDays';
+import WeatherHours from '../components/WeatherHours';
 
 const API_KEY = '6a03dc197c974bac939112527221204';
 
-const Weather = () => {
+const LocationScreen = ({ route }) => {
+  const { selectedCity } = route.params;
   const [data, setData] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
 
   const getData = async () => {
     setRefreshing(true);
 
-    const { status } = await Location.requestForegroundPermissionsAsync();
-    // if permission is denied, show an alert
-    if (status !== 'granted') {
-      Alert.alert('Permission to access location was denied');
-    }
-
-    // get the current location
-    let location = await Location.getCurrentPositionAsync({
-      enableHighAccuracy: true,
-    });
-
-    // ApiService(
-    //   (lat = location.coords.latitude),
-    //   (long = location.coords.longitude)
-    // ).then((data) => {
-    //   setData(data);
-    // });
-
     // fetches the weather data from the openweather api
     const response = await fetch(
-      `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${location.coords.latitude},${location.coords.longitude}&days=3&aqi=no&alerts=no`
+      `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${selectedCity}&days=3&aqi=no&alerts=no`
     );
     const data = await response.json(); // convert the response to json
 
@@ -79,7 +56,7 @@ const Weather = () => {
     <>
       <LottieView
         autoPlay
-        source={require('../assets/lottie/121815-calm-backdrop.json')}
+        source={require('../../assets/lottie/121815-calm-backdrop.json')}
         style={styles.lottieBg}
         resizeMode='cover'
       />
@@ -102,7 +79,7 @@ const Weather = () => {
   );
 };
 
-export default Weather;
+export default LocationScreen;
 
 const styles = StyleSheet.create({
   container: {
