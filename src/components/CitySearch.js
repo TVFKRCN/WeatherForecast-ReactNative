@@ -35,18 +35,11 @@ const CitySearch = () => {
     fetchCityData();
   }, []);
 
-  const [selectedCity, setSelectedCity] = useState('');
-
-  useEffect(() => {
-    console.log(selectedCity);
-  }, [selectedCity]);
-
   const SearchedCity = ({ data }) => (
     <TouchableOpacity
       style={styles.list}
       onPress={() => {
-        setSelectedCity(data.name);
-        navigation.navigate('Location', { selectedCity });
+        navigation.navigate('Location', { selectedCity: data.name });
       }}
     >
       <Text style={styles.listText}>{data.name}</Text>
