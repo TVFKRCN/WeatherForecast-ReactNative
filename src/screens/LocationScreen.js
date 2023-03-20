@@ -41,7 +41,7 @@ const LocationScreen = ({ route }) => {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [route]);
 
   if (!data) {
     // if the forecast is not loaded, show a loading indicator
