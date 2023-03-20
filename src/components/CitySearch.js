@@ -51,6 +51,7 @@ const CitySearch = () => {
     <SafeAreaView>
       <View style={styles.searchBar}>
         <TextInput
+          style={styles.searchText}
           placeholder='Search City'
           value={cityName}
           onChangeText={(text) => {
@@ -85,6 +86,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     paddingHorizontal: 10,
     backgroundColor: 'lightgray',
+  },
+  searchText: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    flex: 1
   },
   listContainer: {
     margin: 20,
