@@ -1,5 +1,4 @@
 import {
-  View,
   Alert,
   StyleSheet,
   SafeAreaView,

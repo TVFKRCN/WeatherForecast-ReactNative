@@ -10,6 +10,7 @@ import {
 import { useEffect, useState } from 'react';
 import { EvilIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const API_KEY = '6a03dc197c974bac939112527221204';
 
@@ -35,6 +36,14 @@ const CitySearch = () => {
     fetchCityData();
   }, []);
 
+  const storeCity = async (city) => {
+    try {
+      await AsyncStorage.setItem("city", JSON.stringify(city.name));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const SearchedCity = ({ data }) => (
     <TouchableOpacity
       style={styles.list}
@@ -43,6 +52,8 @@ const CitySearch = () => {
       }}
     >
       <Text style={styles.listText}>{data.name}</Text>
+      {/* WIP: Change this icon */}
+      <EvilIcons name='search' size={28} color='black' onPress={storeCity(data)} />
       <View style={styles.listSeparator}></View>
     </TouchableOpacity>
   );
