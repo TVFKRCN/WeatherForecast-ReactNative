@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { useEffect, useState } from 'react';
-import { EvilIcons } from '@expo/vector-icons';
+import { EvilIcons, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -38,7 +38,7 @@ const CitySearch = () => {
 
   const storeCity = async (city) => {
     try {
-      await AsyncStorage.setItem("city", JSON.stringify(city.name));
+      await AsyncStorage.setItem('city', JSON.stringify(city.name));
     } catch (error) {
       console.log(error);
     }
@@ -51,9 +51,15 @@ const CitySearch = () => {
         navigation.navigate('Location', { selectedCity: data.name });
       }}
     >
-      <Text style={styles.listText}>{data.name}</Text>
-      {/* WIP: Change this icon */}
-      <EvilIcons name='search' size={28} color='black' onPress={storeCity(data)} />
+      <View style={styles.listLine}>
+        <Text style={styles.listText}>{data.name}</Text>
+        <MaterialIcons
+          name='add-location-alt'
+          size={24}
+          color='black'
+          onPress={() => storeCity(data)}
+        />
+      </View>
       <View style={styles.listSeparator}></View>
     </TouchableOpacity>
   );
@@ -101,13 +107,19 @@ const styles = StyleSheet.create({
   searchText: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    flex: 1
+    flex: 1,
   },
   listContainer: {
-    margin: 20,
+    margin: 24,
   },
   list: {
     paddingBottom: 10,
+    marginBottom: 4,
+  },
+  listLine: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginRight: 16,
   },
   listText: {
     fontSize: 18,
