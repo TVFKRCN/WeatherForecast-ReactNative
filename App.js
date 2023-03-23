@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import SearchScreen from './src/screens/SearchScreen';
@@ -7,25 +7,28 @@ import LocationScreen from './src/screens/LocationScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function App() {
-
-  useEffect(() => {
-    getCity()
-  }, []);
+  // useEffect(() => {
+  //   getCity();
+  // }, []);
 
   const Drawer = createDrawerNavigator();
 
+  const [savedCities, setSavedCities] = useState(null);
+
   const getCity = async () => {
     try {
-      const savedCity = await AsyncStorage.getItem("city");
+      const savedCity = await AsyncStorage.getItem('city');
       const currentCity = JSON.parse(savedCity);
-      console.log(currentCity);
+      // console.log(currentCity);
+      setSavedCities(currentCity);
+      console.log(savedCities);
     } catch (error) {
       console.log(error);
     }
   };
-  
+
   return (
-    <NavigationContainer>
+    <NavigationContainer onStateChange={() => getCity()}>
       <Drawer.Navigator
         initialRouteName='My Location'
         screenOptions={{ headerShown: false }}
@@ -41,6 +44,13 @@ export default function App() {
             },
           }}
         />
+        {savedCities && (
+          <Drawer.Screen
+            name={savedCities}
+            component={LocationScreen}
+            initialParams={{ selectedCity: savedCities }}
+          />
+        )}
       </Drawer.Navigator>
     </NavigationContainer>
   );
