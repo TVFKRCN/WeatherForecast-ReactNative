@@ -34,7 +34,15 @@ export default function App() {
         screenOptions={{ headerShown: false }}
       >
         <Drawer.Screen name='My Location' component={HomeScreen} />
-        <Drawer.Screen name='Search' component={SearchScreen} />
+        <Drawer.Screen
+          name='Search'
+          component={SearchScreen}
+          options={{
+            drawerItemStyle: {
+              display: 'none',
+            },
+          }}
+        />
         <Drawer.Screen
           name='Location'
           component={LocationScreen}
