@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { useEffect, useState } from 'react';
-import { EvilIcons, MaterialIcons } from '@expo/vector-icons';
+import { EvilIcons, MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -67,6 +67,18 @@ const CitySearch = () => {
   return (
     <SafeAreaView>
       <View style={styles.searchBar}>
+        <Ionicons
+          name='arrow-back-sharp'
+          size={26}
+          color='black'
+          onPress={() => navigation.toggleDrawer()}
+        />
+        <Ionicons
+          name='ellipsis-vertical-outline'
+          size={26}
+          color='black'
+          style={{ right: 4 }}
+        />
         <TextInput
           style={styles.searchText}
           placeholder='Search City'
