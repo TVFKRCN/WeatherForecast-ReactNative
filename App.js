@@ -10,7 +10,7 @@ import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
 export default function App() {
   const Drawer = createDrawerNavigator();
 
-  const [savedCities, setSavedCities] = useState(null);
+  const [savedCities, setSavedCities] = useState([]);
 
   const getCity = async () => {
     try {

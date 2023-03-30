@@ -50,7 +50,12 @@ const CitySearch = () => {
 
   const handleCity = (city) => {
     getCity();
-    if (!cities.includes(city.name)) {
+
+    if (cities === null) {
+      const cityNew = [city.name];
+      setCities(cityNew);
+      storeCity(cityNew);
+    } else if (!cities.includes(city.name)) {
       const cityNew = [...cities, city.name];
       setCities(cityNew);
       storeCity(cityNew);
