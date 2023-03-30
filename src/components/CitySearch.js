@@ -18,6 +18,7 @@ const CitySearch = () => {
   const navigation = useNavigation();
   const [cityName, setCityName] = useState('');
   const [cityData, setCityData] = useState('');
+  const [cities, setCities] = useState([]);
 
   const fetchCityData = async (cityName) => {
     const response = await fetch(
@@ -36,9 +37,16 @@ const CitySearch = () => {
     fetchCityData();
   }, []);
 
-  const storeCity = async (city) => {
+  const handleCity = (city) => {
+    const cityNew = [...cities, city.name];
+    setCities(cityNew);
+    storeCity(cityNew);
+  };
+
+  const storeCity = async (value) => {
     try {
-      await AsyncStorage.setItem('city', JSON.stringify(city.name));
+      await AsyncStorage.setItem('cities', JSON.stringify(value));
+      // console.log(cities);
     } catch (error) {
       console.log(error);
     }
@@ -57,7 +65,7 @@ const CitySearch = () => {
           name='add-location-alt'
           size={24}
           color='black'
-          onPress={() => storeCity(data)}
+          onPress={() => handleCity(data)}
         />
       </View>
       <View style={styles.listSeparator}></View>

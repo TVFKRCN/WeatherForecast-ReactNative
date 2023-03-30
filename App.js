@@ -17,7 +17,8 @@ export default function App() {
 
   const getCity = async () => {
     try {
-      const savedCity = await AsyncStorage.getItem('city');
+      // clearAll();
+      const savedCity = await AsyncStorage.getItem('cities');
       const currentCity = JSON.parse(savedCity);
       // console.log(currentCity);
       setSavedCities(currentCity);
@@ -25,6 +26,16 @@ export default function App() {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  clearAll = async () => {
+    try {
+      await AsyncStorage.clear();
+    } catch (e) {
+      // clear error
+    }
+
+    console.log('Done.');
   };
 
   return (
@@ -37,11 +48,11 @@ export default function App() {
         <Drawer.Screen
           name='Search'
           component={SearchScreen}
-          options={{
-            drawerItemStyle: {
-              display: 'none',
-            },
-          }}
+          // options={{
+          //   drawerItemStyle: {
+          //     display: 'none',
+          //   },
+          // }}
         />
         <Drawer.Screen
           name='Location'
@@ -52,13 +63,15 @@ export default function App() {
             },
           }}
         />
-        {savedCities && (
-          <Drawer.Screen
-            name={savedCities}
-            component={LocationScreen}
-            initialParams={{ selectedCity: savedCities }}
-          />
-        )}
+        {savedCities &&
+          savedCities.map((cities) => (
+            <Drawer.Screen
+              key={cities}
+              name={cities}
+              component={LocationScreen}
+              initialParams={{ selectedCity: cities }}
+            />
+          ))}
       </Drawer.Navigator>
     </NavigationContainer>
   );
