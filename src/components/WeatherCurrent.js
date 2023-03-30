@@ -10,15 +10,17 @@ const WeatherCurrent = ({ data }) => {
       <View style={styles.header}>
         <Ionicons
           name='md-menu'
-          size={30}
+          size={32}
           color='black'
+          style={{ top: 2 }}
           onPress={() => navigation.toggleDrawer()}
         />
         <Text style={styles.cityName}>{data.location.name}</Text>
         <Ionicons
           name='search'
-          size={28}
+          size={30}
           color='black'
+          style={{ top: 1 }}
           onPress={() => {
             navigation.navigate('Search');
           }}
@@ -68,7 +70,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 12,
   },
   cityName: {
-    color: '#C84B31',
+    color: 'maroon',
     fontSize: 36,
     textAlign: 'center',
   },
