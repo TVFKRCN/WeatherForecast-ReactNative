@@ -35,18 +35,31 @@ const CitySearch = () => {
 
   useEffect(() => {
     fetchCityData();
+    getCity();
   }, []);
 
+  const getCity = async () => {
+    try {
+      const savedCity = await AsyncStorage.getItem('cities');
+      const currentCity = JSON.parse(savedCity);
+      setCities(currentCity);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleCity = (city) => {
-    const cityNew = [...cities, city.name];
-    setCities(cityNew);
-    storeCity(cityNew);
+    getCity();
+    if (!cities.includes(city.name)) {
+      const cityNew = [...cities, city.name];
+      setCities(cityNew);
+      storeCity(cityNew);
+    }
   };
 
   const storeCity = async (value) => {
     try {
       await AsyncStorage.setItem('cities', JSON.stringify(value));
-      // console.log(cities);
     } catch (error) {
       console.log(error);
     }

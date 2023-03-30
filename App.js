@@ -1,26 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import SearchScreen from './src/screens/SearchScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import LocationScreen from './src/screens/LocationScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function App() {
-  // useEffect(() => {
-  //   getCity();
-  // }, []);
-
   const Drawer = createDrawerNavigator();
 
   const [savedCities, setSavedCities] = useState(null);
 
   const getCity = async () => {
     try {
-      // clearAll();
       const savedCity = await AsyncStorage.getItem('cities');
       const currentCity = JSON.parse(savedCity);
-      // console.log(currentCity);
       setSavedCities(currentCity);
       console.log(savedCities);
     } catch (error) {
@@ -28,14 +23,21 @@ export default function App() {
     }
   };
 
-  clearAll = async () => {
-    try {
-      await AsyncStorage.clear();
-    } catch (e) {
-      // clear error
-    }
+  const removeCity = async (value) => {
+    savedCities.splice(savedCities.indexOf(value), 1);
+    const newCitiesArray = savedCities;
+    setSavedCities(newCitiesArray);
+    storeCity(newCitiesArray);
+    getCity();
+  };
 
-    console.log('Done.');
+  const storeCity = async (value) => {
+    try {
+      await AsyncStorage.setItem('cities', JSON.stringify(value));
+      // console.log(cities);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -44,15 +46,36 @@ export default function App() {
         initialRouteName='My Location'
         screenOptions={{ headerShown: false }}
       >
-        <Drawer.Screen name='My Location' component={HomeScreen} />
+        <Drawer.Screen
+          name='My Location'
+          component={HomeScreen}
+          options={{
+            drawerIcon: ({}) => (
+              <Entypo
+                name='location'
+                size={20}
+                color='dimgray'
+                style={{ position: 'absolute', right: 20 }}
+              />
+            ),
+          }}
+        />
         <Drawer.Screen
           name='Search'
           component={SearchScreen}
-          // options={{
-          //   drawerItemStyle: {
-          //     display: 'none',
-          //   },
-          // }}
+          options={{
+            // drawerItemStyle: {
+            //     display: 'none',
+            //   },
+            drawerIcon: ({}) => (
+              <MaterialCommunityIcons
+                name='map-search'
+                size={20}
+                color='dimgray'
+                style={{ position: 'absolute', right: 20 }}
+              />
+            ),
+          }}
         />
         <Drawer.Screen
           name='Location'
@@ -70,6 +93,17 @@ export default function App() {
               name={cities}
               component={LocationScreen}
               initialParams={{ selectedCity: cities }}
+              options={{
+                drawerIcon: ({}) => (
+                  <Entypo
+                    name='circle-with-cross'
+                    size={20}
+                    color='dimgray'
+                    style={{ position: 'absolute', right: 20 }}
+                    onPress={() => removeCity(cities)}
+                  />
+                ),
+              }}
             />
           ))}
       </Drawer.Navigator>
